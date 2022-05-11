@@ -1,0 +1,120 @@
+<html>
+  <head>
+  <div class="topnav">
+    <div class="container-nav" >
+      <a href="search/1">News App</a>
+      <div class="topnav-right">
+        <a href="/users/login">Log In</a>
+        <a href="/users/register">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <div class="refresh">
+
+          <form method="GET" id="refresh" action="/">
+            <form method="GET" id="refresh" action="/search/1"></form>
+            <Button type="submit" >Refresh</Button>
+          </form> 
+          
+        </div>
+      </div>
+      
+    </div>
+  </div><div>
+  </div>
+  </div>
+
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@1&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../public/style.css">
+        <style>
+            .form-control{
+                border-color: red;
+            }
+         
+             
+        </style>
+</head>
+
+
+ 
+  <div class="welcome-text">
+  </div>
+
+
+  <body style="background-color: #222121;">
+    <form class="" action="/search/1" method="POST">
+  
+      <div style="text-align: center;">
+  <input class="form" id="search_bar" name="search" type="search" placeholder="Search" style="width: 522px; margin-bottom: 10%;"aria-label="Search"> 
+  <button class="btn btn-primary " style="width: 75px; margin-top: 2px" id="search_button" type="Submit">Search</button>
+  
+  </div>
+  
+  <div class="news-container"  >
+      <div class="news" >
+          <% articles.forEach(function(article,index){ %>
+            <% if ((typeof article.url=='object') || (typeof article.title=='object') || (typeof article.urlToImage=='object') || (typeof article.content=='object')){ %>
+              <% } else{ %>
+                <a href="<%- article.url %>" target="_blank" class="news-box Hover-effect">
+                  <img src="<%- article.urlToImage %>" alt="Image"> 
+                  <h3 style="color:white">
+                    <%- article.title %>
+                  </h3>
+                  
+                  <br>
+                  <Button href="<%- article.url %> "target="_blank" style=" background-color:#005abb;border-radius: 12px;font-weight:bold; color: #fff; box-Shadow: 0 30px 36px 0 rgba(0, 0, 0, 0.2)"">Read more →</Button>
+
+                  <p style="margin-bottom: 0px; position: absolute; right: 0; bottom: 0; font-family: ui-monospace;"><span style="color:white;" >
+                    <%- new Date(article.publishedAt.slice(0,10)).toDateString() %>  
+                      <%- moment.utc(article.publishedAt).local().format('hh: mm A') %> </span></p>
+                </a>
+              <% } %>
+            <% }) %>
+          </div>
+      </div>
+  
+
+      <div class="pagination">
+        <% if (pages > 0) { %>
+          
+              <% if (current === 1) { %>
+                  <a>First</a>
+              <% } else { %>
+                  <a href="/search/1">First</a>
+              <% } %>
+              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+              <% if (i !== 1) { %>
+                  <a>...</a>
+              <% } %>
+              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                  <% if (i === current) { %>
+                      <a><%= i %></a>
+                  <% } else { %>
+                      <a href="/search/<%= i %>"><%= i %></a>
+                  <% } %>
+                  <% if (i === Number(current) + 4 && i < pages) { %>
+                      <a>...</a>
+                  <% } %>
+              <% } %>
+              <% if (current === pages) { %>
+                  <a>Last</a>
+              <% } else { %>
+                  <a href="/search/<%= pages %>">Last</a>
+              <% } %>
+          
+        <% } %>
+        </div>
+
+
+  <script src="moment.js"></script>
+  <script src="moment-timezone-with-data.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </body>
+</html>
